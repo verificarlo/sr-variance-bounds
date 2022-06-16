@@ -99,7 +99,7 @@ plt.plot(n_values, dete_bound, linestyle=':', color='b', label = 'Deterministic 
 for r in range(sr_samples):
     plt.plot(n_values, sr[r], ' v', color='r', label = 'SR-nearness' if r == 0 else '')
 
-plt.plot(n_values, sr_average, ' o', color='k', label = 'Average')
+plt.plot(n_values, sr_average, ' o', color='k', label = 'SR-average')
 
 plt.plot(n_values, ieee_error, ' *', color='y', label = "RN-binary32")
 
