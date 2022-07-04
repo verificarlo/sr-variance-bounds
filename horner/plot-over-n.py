@@ -17,7 +17,7 @@ import math
 u = 2**(-23)
 
 # lambda
-lam = 0.5
+lam = 0.1
 
 # Define plot title and labels
 plt.title("$1-\lambda$ = {} ".format(1-lam))
