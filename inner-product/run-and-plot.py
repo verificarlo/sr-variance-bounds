@@ -16,13 +16,13 @@ import numpy as np
 import matplotlib
 import subprocess
 
-# sr unit-roundoff
+# SR unit-roundoff
 u = 2**(-23)
 
 # lambda
 lam = 0.1
 
-# sr samples
+# SR samples
 sr_samples = 30
 
 # n interval
