@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Accompagnying script to replicate the experiments in Figure 8 of the paper:
 "Stochastic Rounding Variance and Probabilistic Bound: a New Approach"
@@ -34,7 +36,7 @@ def verificarlo_run(n):
     """
 
     cmd = 'VFC_BACKENDS_LOGFILE="verificarlo.log" '
-    cmd += 'VFC_BACKENDS="libinterflop_mca-int.so --precision-binary32=24" '
+    cmd += 'VFC_BACKENDS="libinterflop_mca_int.so --precision-binary32=24" '
     cmd += './product {} {}'.format(n, sr_samples)
     samples = [float(s) for s in subprocess.getoutput(cmd).split()]
     # The first value is the reference computation in double
@@ -56,7 +58,7 @@ def error(x, ref):
     return abs((x-ref)/ref)
 
 # Define plot title and labels
-title = "$1-\lambda$ = {} ".format(1-lam)
+title = "-\lambda$ = {} ".format(1-lam)
 plt.figure(title, figsize=(10, 8))
 plt.suptitle(title)
 plt.xlabel("$n$")
@@ -76,7 +78,7 @@ azuma = []
 cheby = []
 dete_bound = []
 
-# Compute all values and deterministic bounds across increasing n 
+# Compute all values and deterministic bounds across increasing n
 for n in n_values:
     print(n)
     ref, samples = verificarlo_run(n)
