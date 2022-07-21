@@ -4,11 +4,12 @@
 #  ./run-over-n.sh $1 $2 $3
 #
 # $1 numerator
-# $2 denominator 
+# $2 denominator
 # $3 max polynomial degree
 
 if [ "$#" -ne 3 ]; then
     echo "usage: ./run-over-n.sh x-numerator x-denominator degree-max"
+    exit 1
 fi
 
 rm -f global_*.tsv

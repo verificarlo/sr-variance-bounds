@@ -7,8 +7,9 @@
 # $2 denominator
 # x = k/$2
 
-if [ "$#" -ne 3 ]; then
+if [ "$#" -ne 2 ]; then
     echo "usage: ./run-over-x.sh 2*(polynomial degree) x-denominator"
+    exit 1
 fi
 
 rm -f global_*.tsv
@@ -33,10 +34,10 @@ VFC_BACKENDS="libinterflop_ieee.so" \
     for i in $(seq 30);
     do
         VFC_BACKENDS="libinterflop_mca_int.so --precision-binary32=24 --mode=rr" \
-        ./horner $1 $k $2 > resultats_$i"_"$k.tsv       
-        cat resultats_$i"_"$k.tsv >> global_$k.tsv 
+        ./horner $1 $k $2 > resultats_$i"_"$k.tsv
+        cat resultats_$i"_"$k.tsv >> global_$k.tsv
     done
-((k+=2)) 
+((k+=2))
 done
 
 # Plot the samples
