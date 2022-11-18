@@ -21,7 +21,7 @@ import subprocess
 # SR unit-roundoff
 u = 2**(-23)
 
-# lambda
+# Lambda
 lam = 0.1
 
 # SR samples
@@ -58,8 +58,8 @@ def error(x, ref):
     return abs((x-ref)/ref)
 
 # Define plot title and labels
-title = "-\lambda$ = {} ".format(1-lam)
-plt.figure(title, figsize=(10, 8))
+title = "1 - $\lambda$ = {} ".format(1-lam)
+plt.figure(title, figsize=(10, 6))
 plt.suptitle(title)
 plt.xlabel("$n$")
 plt.xscale('log')
@@ -74,8 +74,9 @@ sr = [[] for _ in range(sr_samples)]
 sr_average = []
 
 # Bounds
-azuma = []
-cheby = []
+ah2 = []
+bc = []
+ah1 =  []
 dete_bound = []
 
 # Compute all values and deterministic bounds across increasing n
@@ -87,23 +88,26 @@ for n in n_values:
     ieee_error.append(error(ieee_value, ref))
     for r in range(sr_samples):
         sr[r].append([error(samples[r],ref)])
-
-    azuma.append(math.sqrt(u*((1+u)**(2*n)-1)*(math.log(2.0/(lam)))))
-    cheby.append(math.sqrt(((1+(u)**2)**(n)-1)*(1.0/(lam))))
+    z =  math.sqrt( 2*n*math.log(2*n / lam) )
+    ah1.append( math.exp( (u*z +  n*u**2 )/ (1.0- u)) -1 ) 
+    ah2.append(math.sqrt(u*((1+u)**(2*n)-1)*(math.log(2.0/(lam)))))
+    bc.append(math.sqrt(((1+(u)**2)**(n)-1)*(1.0/(lam))))
     dete_bound.append((1+u)**(n)-1)
 
+
 # Plot the deterministic and probabilistic upper bounds on forward error
-plt.plot(n_values, cheby, color='c', label = 'BC bound')
-plt.plot(n_values, azuma, '--', color='g', label = 'AH bound')
-plt.plot(n_values, dete_bound, linestyle=':', color='b', label = 'Deterministic bound')
+plt.plot(n_values, dete_bound, linestyle=':', color='b', label = 'Det bound')
+plt.plot(n_values, ah1, linestyle = 'dashdot', color='m', label = 'AH1 bound')
+plt.plot(n_values, ah2, '--', color='g', label = 'AH2 bound')
+plt.plot(n_values, bc, color='c', label = 'BC bound')
 
 # Plot RN and SR samples
 for r in range(sr_samples):
-    plt.plot(n_values, sr[r], ' v', color='r', label = 'SR-nearness' if r == 0 else '')
+   plt.plot(n_values, sr[r], ' v', color='r', label = 'SR-nearness' if r == 0 else '')
+plt.plot(n_values, ieee_error, ' *', color='y', label = "RN-binary32")
 
 plt.plot(n_values, sr_average, ' o', color='k', label = 'SR-average')
 
-plt.plot(n_values, ieee_error, ' *', color='y', label = "RN-binary32")
 
 
 plt.legend()
