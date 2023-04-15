@@ -36,7 +36,7 @@ def verificarlo_run(n):
     """
 
     cmd = 'VFC_BACKENDS_LOGFILE="verificarlo.log" '
-    cmd += 'VFC_BACKENDS="libinterflop_mca_int.so --precision-binary32=24" '
+    cmd += 'VFC_BACKENDS="libinterflop_mca_int.so --precision-binary32=24 --mode=rr" '
     cmd += './product {} {}'.format(n, sr_samples)
     samples = [float(s) for s in subprocess.getoutput(cmd).split()]
     # The first value is the reference computation in double
